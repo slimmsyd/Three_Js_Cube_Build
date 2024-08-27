@@ -7,7 +7,8 @@ body, html {
     margin:0px;
     color:rgb(20,20,20);
     overflow: hidden;
-    background:url('../assets/img/ui_edit/Background2x.png');
+    /* background:url('../assets/img/ui_edit/Background2x.png'); */
+    background:transparent;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
