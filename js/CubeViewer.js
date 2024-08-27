@@ -21,17 +21,59 @@ import { cubeBank } from 'scripts/Database.js';
 
 
 
-// CLASS
-export class CubeViewer{
-    constructor(){
 
+export class CubeViewer {
+    constructor() {}
+  
+    init() {
+      console.log('Rendering with cubeBank:', cubeBank);  // Log the cubeBank used for rendering
+      this.renderCubes();  // Render cubes based on the updated cubeBank
+      animate();
     }
-    init(){
-        animate();
+  
+  
+    renderCubes() {
+        // Clear any previous cubes before rendering new ones
+        cubeGroup.clear();
+
+        // Loop over the cubeBank entries and render the cubes
+        let dataCubes = Object.entries(cubeBank);
+
+
+
+        console.log("Loggin data cubes", dataCubes)
+        for(let i=0;i<dataCubes.length;i++){
+        
+            let div = document.createElement('div');
+            div.classList.add("cube-icon");
+            div.setAttribute("id", "icon_" + dataCubes[i][0]);
+        
+            let img = document.createElement('img');
+            img.src = "../assets/img/cube_thumbnails/icon_" + dataCubes[i][0] + ".png";
+            div.appendChild(img);
+        
+            document.getElementById('inventory-holder_content').appendChild( div );
+            div.addEventListener("click", (event) => {
+                if (event.target.classList.contains('off')) {
+                    div.classList.remove("off");
+                    div.classList.add("loading");
+                    removeModel(dataCubes[i], div);
+                }else{
+                    div.classList.add("loading");
+                    loadModel(dataCubes[i], div);
+                }
+                
+                
+            });
     }
 }
+  }
+
 
 // TOOLS
+
+
+
 const pointer = new THREE.Vector2();
 const clock = new THREE.Clock();
 const raycaster = new THREE.Raycaster();
@@ -185,6 +227,10 @@ window.addEventListener("mouseup", onMouseUp, false);
 
 // 
 let dataCubes = Object.entries(cubeBank);
+
+
+
+console.log("Loggin data cubes", dataCubes)
 for(let i=0;i<dataCubes.length;i++){
 
     let div = document.createElement('div');
@@ -263,16 +309,8 @@ function animate() {
 }
 
 
-// Listen for messages sent via postMessage
-window.addEventListener('message', (event) => {
-    // Ensure that the message is coming from a trusted origin
+
   
-    // Log the received wallet address
-    const walletAddress = event.data;
-    console.log('Received wallet address:', walletAddress);
-  
-    // You can perform any other actions with the walletAddress here before initializing the scene
-  });
 
 function render() {
 

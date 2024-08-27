@@ -12,6 +12,58 @@
     <!-- CSS -->
     <link rel="stylesheet" href="./css/main.css">
 
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Function to fetch the wallet address from the external server
+        const fetchWalletAddressFromExternalServer = async () => {
+          try {
+            const response = await fetch('http://localhost:3001/api/wallet'); // Replace with the external server's URL
+            const data = await response.json();
+            if (data.walletAddress) {
+              console.log('Wallet address received from external server:', data.walletAddress);
+              return data.walletAddress;
+            } else {
+              console.error('No wallet address found on external server');
+              return null;
+            }
+          } catch (error) {
+            console.error('Error fetching wallet address from external server:', error);
+            return null;
+          }
+        };
+  
+        // Function to fetch wallet data using the wallet address
+        const fetchWalletAddressData = async (walletAddress) => {
+          try {
+            const response = await fetch(`http://localhost:3001/api/wallet/${walletAddress}`);
+            const data = await response.json();
+            
+            // Check if data is valid
+            if (data.walletAddress) {
+              console.log(`Data for wallet ${data.walletAddress}:`, data);
+              // You can now render the data in your UI, use it in Three.js, etc.
+            } else {
+              console.log('No data found for this wallet address.');
+            }
+          } catch (error) {
+            console.error('Error fetching wallet data from server:', error);
+          }
+        };
+  
+        // First, fetch the wallet address from the external server
+        const getAndFetchWalletData = async () => {
+          const walletAddress = await fetchWalletAddressFromExternalServer();
+          if (walletAddress) {
+            // Once the wallet address is received, fetch the corresponding data
+            fetchWalletAddressData(walletAddress);
+          }
+        };
+  
+        // Call the function to get the wallet address and fetch data
+        getAndFetchWalletData();
+      });
+    </script>
+
   </head>
   <body> 
 
