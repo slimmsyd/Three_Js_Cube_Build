@@ -15,6 +15,12 @@ import { LUTImageLoader } from 'three/addons/loaders/LUTImageLoader.js';
 import { cubeBank } from 'scripts/Database.js';
 
 
+
+
+
+
+
+
 // CLASS
 export class CubeViewer{
     constructor(){
@@ -256,6 +262,17 @@ function animate() {
 
 }
 
+
+// Listen for messages sent via postMessage
+window.addEventListener('message', (event) => {
+    // Ensure that the message is coming from a trusted origin
+  
+    // Log the received wallet address
+    const walletAddress = event.data;
+    console.log('Received wallet address:', walletAddress);
+  
+    // You can perform any other actions with the walletAddress here before initializing the scene
+  });
 
 function render() {
 
