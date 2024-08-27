@@ -35,15 +35,16 @@
         // Function to fetch wallet data using the wallet address
         const fetchWalletAddressData = async (walletAddress) => {
           try {
-            const response = await fetch(`http://localhost:3001/api/wallet/${walletAddress}`);
+            const response = await fetch(`https://creature-cubes-api.vercel.app/api/0x123`);
             const data = await response.json();
             
+
             // Check if data is valid
             if (data.walletAddress) {
               console.log(`Data for wallet ${data.walletAddress}:`, data);
               // You can now render the data in your UI, use it in Three.js, etc.
             } else {
-              console.log('No data found for this wallet address.');
+              console.log('No data found for this wallet address.' , walletAddress);
             }
           } catch (error) {
             console.error('Error fetching wallet data from server:', error);
