@@ -27,46 +27,46 @@ export class CubeViewer {
   
     init() {
       console.log('Rendering with cubeBank:', cubeBank);  // Log the cubeBank used for rendering
-      this.renderCubes();  // Render cubes based on the updated cubeBank
+    //   this.renderCubes();  // Render cubes based on the updated cubeBank
       animate();
     }
   
   
-    renderCubes() {
-        // Clear any previous cubes before rendering new ones
-        cubeGroup.clear();
+//     renderCubes() {
+//         // Clear any previous cubes before rendering new ones
+//         cubeGroup.clear();
 
-        // Loop over the cubeBank entries and render the cubes
-        let dataCubes = Object.entries(cubeBank);
+//         // Loop over the cubeBank entries and render the cubes
+//         let dataCubes = Object.entries(cubeBank);
 
 
 
-        console.log("Loggin data cubes", dataCubes)
-        for(let i=0;i<dataCubes.length;i++){
+//         console.log("Loggin data cubes", dataCubes)
+//         for(let i=0;i<dataCubes.length;i++){
         
-            let div = document.createElement('div');
-            div.classList.add("cube-icon");
-            div.setAttribute("id", "icon_" + dataCubes[i][0]);
+//             let div = document.createElement('div');
+//             div.classList.add("cube-icon");
+//             div.setAttribute("id", "icon_" + dataCubes[i][0]);
         
-            let img = document.createElement('img');
-            img.src = "../assets/img/cube_thumbnails/icon_" + dataCubes[i][0] + ".png";
-            div.appendChild(img);
+//             let img = document.createElement('img');
+//             img.src = "../assets/img/cube_thumbnails/icon_" + dataCubes[i][0] + ".png";
+//             div.appendChild(img);
         
-            document.getElementById('inventory-holder_content').appendChild( div );
-            div.addEventListener("click", (event) => {
-                if (event.target.classList.contains('off')) {
-                    div.classList.remove("off");
-                    div.classList.add("loading");
-                    removeModel(dataCubes[i], div);
-                }else{
-                    div.classList.add("loading");
-                    loadModel(dataCubes[i], div);
-                }
+//             document.getElementById('inventory-holder_content').appendChild( div );
+//             div.addEventListener("click", (event) => {
+//                 if (event.target.classList.contains('off')) {
+//                     div.classList.remove("off");
+//                     div.classList.add("loading");
+//                     removeModel(dataCubes[i], div);
+//                 }else{
+//                     div.classList.add("loading");
+//                     loadModel(dataCubes[i], div);
+//                 }
                 
                 
-            });
-    }
-}
+//             });
+//     }
+// }
   }
 
 
@@ -225,34 +225,38 @@ window.addEventListener("mousedown", onMouseDown, false);
 window.addEventListener("mouseup", onMouseUp, false);
 
 
-// 
+
+
+// CUBES
 let dataCubes = Object.entries(cubeBank);
-
-
-
-console.log("Loggin data cubes", dataCubes)
-for(let i=0;i<dataCubes.length;i++){
-
+// Function to extract the number from filenames like "3 Ruby (#3) thumbnail"
+for (let i = 0; i < dataCubes.length; i++) {
     let div = document.createElement('div');
     div.classList.add("cube-icon");
-    div.setAttribute("id", "icon_" + dataCubes[i][0]);
+    div.setAttribute("id",  + dataCubes[i][0]);
 
     let img = document.createElement('img');
-    img.src = "../assets/img/cube_thumbnails/icon_" + dataCubes[i][0] + ".png";
+
+    // Encode the filename to handle special characters like spaces and parentheses
+    const encodedFileName = encodeURIComponent(dataCubes[i][0]);
+
+    // Set the image source with the encoded filename
+    img.src = `../assets/img/cube_thumbnails/${encodedFileName}.png`;
+
     div.appendChild(img);
 
-    document.getElementById('inventory-holder_content').appendChild( div );
+    console.log("Logging image source:", img.src);
+    document.getElementById('inventory-holder_content').appendChild(div);
+
     div.addEventListener("click", (event) => {
         if (event.target.classList.contains('off')) {
             div.classList.remove("off");
             div.classList.add("loading");
             removeModel(dataCubes[i], div);
-        }else{
+        } else {
             div.classList.add("loading");
             loadModel(dataCubes[i], div);
         }
-        
-        
     });
 
 }
